@@ -15,9 +15,9 @@ class TextClassifizerConfig():
                  learning_rate=20,
                  epochs: int = 20,
                  max_sequence_length: int = 100,
-                 train_data: Text = "data/text-classifizer/train.csv",
-                 eval_data: Text = "data/text-classifizer/train.csv"):
-
+                 train_data: Text = "data/train.csv",
+                 eval_data: Text = "data/train.csv"):
+        self.train_data = train_data
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         print('Using {} device'.format(self.device))
         if torch.cuda.is_available():

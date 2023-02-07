@@ -8,10 +8,9 @@ import torch
 from typing import Union, Optional, Text, Tuple
 from torch.utils.data import DataLoader, Dataset
 from torch.utils.tensorboard import SummaryWriter
-import abc
 
 
-class Trainer():
+class Trainer(object):
 
     def name(self) -> Text:
         raise NotImplementedError
@@ -55,8 +54,7 @@ class TextClassifizerTrainer(Trainer):
         self.device = device
 
     def train(self):
-
-        loss_fn = torch.nn.BCELoss()  # 多分类更换函数
+        loss_fn = torch.nn.CrossEntropyLoss()  # 多分类更换函数
         optimizer = torch.optim.Adam(self.model.parameters(),
                                      lr=self.learning_rate,
                                      weight_decay=0.1)
@@ -111,8 +109,8 @@ class TextClassifizerTrainer(Trainer):
                                    current_acc / current_count,
                                    (epoch - 1) * len(self.train_dataloader) + batch
                                    )
-            print('| epoch {:3d} | {:5d}/{:5d} batches'
-                  '| accuracy {:8,3f}'
+            print('| epoch {:3d} | {:5d}/{:5d} batches '
+                  '| accuracy {:8.3f}'
                   '| loss {:8.3f}'
                   .format(epoch, batch, len(self.train_dataloader),
                           current_acc / current_count, loss))
